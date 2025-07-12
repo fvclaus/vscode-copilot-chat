@@ -190,6 +190,7 @@ export class LogMemory {
 	}
 
 	static addLog(level: string, message: string): void {
+		console.log(`[${level}]: ${message}`);
 		if (this._logs.length >= this.MAX_LOGS) {
 			this._logs.shift();
 		}

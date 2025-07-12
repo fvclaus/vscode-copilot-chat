@@ -48,7 +48,10 @@ export abstract class BaseFetchFetcher implements IFetcher {
 	}
 
 	private async _fetch(url: string, method: 'GET' | 'POST', headers: { [name: string]: string }, body: string | undefined, signal: AbortSignal): Promise<Response> {
+		console.log(`-----------------------\n${method} ${url}\n${JSON.stringify(headers, null, 2)}\n=======\n${body}\n\n`);
 		const resp = await this._fetchImpl(url, { method, headers, body, signal });
+		const clone = resp.clone();
+		console.log(`-----------------------\n${method} ${url} ${clone.status}: ${clone.statusText}\n${[...clone.headers.entries()].map(entry => JSON.stringify(entry)).join('\n')}\n=======\n${await clone.text()}\n\n`);
 		return new Response(
 			resp.status,
 			resp.statusText,

@@ -30,7 +30,8 @@ jobs:
         run: npm run build
 
       - name: Package application
-        run: npm run package
+      # build removes package.json scripts
+        run: npx vsce package
 
       - name: Get package version
         id: get_version

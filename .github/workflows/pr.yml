@@ -154,7 +154,7 @@ jobs:
 
   windows-tests:
     name: Test (Windows)
-    runs-on: [ self-hosted, 1ES.Pool=1es-vscode-windows-2022-x64 ]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

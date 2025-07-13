@@ -2,7 +2,7 @@
 	"name": "copilot-chat",
 	"displayName": "GitHub Copilot Chat",
 	"description": "AI chat features powered by Copilot",
-	"version": "0.30.0",
+	"version": "0.29.0-byok-fix-v1",
 	"build": "1",
 	"internalAIKey": "1058ec22-3c95-4951-8443-f26c1f325911",
 	"internalLargeStorageAriaKey": "ec712b3202c5462fb6877acae7f1f9d7-c19ad55e-3e3c-4f99-984b-827f6d95bd9e-6917",
@@ -22,7 +22,7 @@
 	"icon": "assets/copilot.png",
 	"pricing": "Trial",
 	"engines": {
-		"vscode": "^1.102.0-20250627",
+		"vscode": "^1.101.2",
 		"npm": ">=9.0.0",
 		"node": ">=22.14.0"
 	},
@@ -2841,8 +2841,14 @@
 						},
 						"additionalProperties": {
 							"type": "boolean",
-							"enum": [true, false],
-							"enumDescriptions": ["%github.copilot.config.agent.terminal.allowList.value.true%", "%github.copilot.config.agent.terminal.allowList.value.false%"],
+							"enum": [
+								true,
+								false
+							],
+							"enumDescriptions": [
+								"%github.copilot.config.agent.terminal.allowList.value.true%",
+								"%github.copilot.config.agent.terminal.allowList.value.false%"
+							],
 							"description": "%github.copilot.config.agent.terminal.allowList.key%"
 						},
 						"tags": [
@@ -2870,7 +2876,10 @@
 								true,
 								false
 							],
-							"enumDescriptions": ["%github.copilot.config.agent.terminal.denyList.value.true%", "%github.copilot.config.agent.terminal.denyList.value.false%"],
+							"enumDescriptions": [
+								"%github.copilot.config.agent.terminal.denyList.value.true%",
+								"%github.copilot.config.agent.terminal.denyList.value.false%"
+							],
 							"description": "%github.copilot.config.agent.terminal.denyList.key%"
 						},
 						"tags": [

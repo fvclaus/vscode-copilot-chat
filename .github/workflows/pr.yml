@@ -6,8 +6,6 @@ on:
       - 'gh-readonly-queue/main/*'
   pull_request:
     branches:
-      - main
-      - 'release/*'
 
 permissions:
   contents: read

@@ -1,0 +1,59 @@
+on:
+  create:
+    tags:
+      - 'v*' # Trigger on tag creation, e.g., v1.0.0
+
+  release:
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # To create a GitHub Release
+      id-token: write # Required for OIDC authentication if publishing to a registry
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.14.x'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Package application
+      # build removes package.json scripts
+        run: npx vsce package
+
+      - name: Get package version
+        id: get_version
+        run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.get_version.outputs.VERSION }}
+          release_name: Release v${{ steps.get_version.outputs.VERSION }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./copilot-chat-${{ steps.get_version.outputs.VERSION }}.vsix # Adjust filename if different
+          asset_name: copilot-chat-${{ steps.get_version.outputs.VERSION }}.vsix # Adjust filename if different
+          asset_content_type: application/vscode-extension
